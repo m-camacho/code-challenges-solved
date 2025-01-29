@@ -14,6 +14,20 @@ function App() {
   const [leftItems, setLeftItems] = useState(items);
   const [rightItems, setRightItems] = useState([]);
 
+  const moveSelections = (sourceList, targetList) => {
+    const itemsToStay = [];
+    const itemsToMove = [];
+    sourceList.forEach((currentItem) => {
+      if (currentItem.selected) {
+        itemsToMove.push(currentItem);
+        currentItem.selected = false;
+      } else {
+        itemsToStay.push(currentItem);
+      }
+    });
+    return [itemsToStay, [...targetList, ...itemsToMove]];
+  };
+
   return (
     <>
       <h1>Items Columns Selector</h1>
@@ -29,18 +43,12 @@ function App() {
           <div className="buttons-container flex flex-col gap-3 justify-center">
             <button
               onClick={() => {
-                const itemsToStay = [];
-                const itemsToMove = [];
-                leftItems.forEach((currentItem) => {
-                  if (currentItem.selected) {
-                    itemsToMove.push(currentItem);
-                    currentItem.selected = false;
-                  } else {
-                    itemsToStay.push(currentItem);
-                  }
-                });
-                setLeftItems(itemsToStay);
-                setRightItems([...rightItems, ...itemsToMove]);
+                const [newLeftItems, newRightItems] = moveSelections(
+                  leftItems,
+                  rightItems
+                );
+                setLeftItems(newLeftItems);
+                setRightItems(newRightItems);
               }}
             >
               {" "}
@@ -48,18 +56,12 @@ function App() {
             </button>
             <button
               onClick={() => {
-                const itemsToStay = [];
-                const itemsToMove = [];
-                rightItems.forEach((currentItem) => {
-                  if (currentItem.selected) {
-                    itemsToMove.push(currentItem);
-                    currentItem.selected = false;
-                  } else {
-                    itemsToStay.push(currentItem);
-                  }
-                  setRightItems(itemsToStay);
-                  setLeftItems([...leftItems, ...itemsToMove]);
-                });
+                const [newRightItems, newLeftItems] = moveSelections(
+                  rightItems,
+                  leftItems
+                );
+                setLeftItems(newLeftItems);
+                setRightItems(newRightItems);
               }}
             >
               {" "}
