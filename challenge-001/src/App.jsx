@@ -1,19 +1,31 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
       <h1>Items Columns</h1>
       <div className="card p-7">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <div className="container flex gap-2">
+          <ItemsPanel></ItemsPanel>
+          <ItemsPanel></ItemsPanel>
+        </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+function ItemsPanel() {
+  const items = ["first", "second", "third"];
+  return (
+    <div className="flex-1 bg-slate-600 h-40 w-14 rounded">
+      {items.map((item) => (
+        <div>{item}</div>
+      ))}
+    </div>
+  );
+}
+
+export default App;
