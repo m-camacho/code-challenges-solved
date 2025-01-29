@@ -25,6 +25,9 @@ function App() {
         itemsToStay.push(currentItem);
       }
     });
+    targetList.forEach((currentItem) => {
+      currentItem.selected = false;
+    });
     return [itemsToStay, [...targetList, ...itemsToMove]];
   };
 
