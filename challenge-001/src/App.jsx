@@ -46,7 +46,25 @@ function App() {
               {" "}
               &#x27A1;{" "}
             </button>
-            <button> &#x2B05; </button>
+            <button
+              onClick={() => {
+                const itemsToStay = [];
+                const itemsToMove = [];
+                rightItems.forEach((currentItem) => {
+                  if (currentItem.selected) {
+                    itemsToMove.push(currentItem);
+                    currentItem.selected = false;
+                  } else {
+                    itemsToStay.push(currentItem);
+                  }
+                  setRightItems(itemsToStay);
+                  setLeftItems([...leftItems, ...itemsToMove]);
+                });
+              }}
+            >
+              {" "}
+              &#x2B05;{" "}
+            </button>
           </div>
 
           <ItemsPanel
