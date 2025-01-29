@@ -51,8 +51,7 @@ function App() {
                 setRightItems(newRightItems);
               }}
             >
-              {" "}
-              &#x27A1;{" "}
+              &#x27A1;
             </button>
             <button
               onClick={() => {
@@ -64,8 +63,7 @@ function App() {
                 setRightItems(newRightItems);
               }}
             >
-              {" "}
-              &#x2B05;{" "}
+              &#x2B05;
             </button>
           </div>
 
