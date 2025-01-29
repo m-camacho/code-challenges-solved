@@ -1,35 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import ItemsPanel from "./ItemsPanel";
+
+const items = [
+  { id: "001", label: "first", selected: false },
+  { id: "002", label: "second", selected: false },
+  { id: "003", label: "third", selected: false },
+  { id: "004", label: "fourth", selected: false },
+  { id: "005", label: "fifth", selected: false },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [leftItems, setLeftItems] = useState(items);
+  const [rightItems, setRightItems] = useState([]);
+
+  const moveSelections = (sourceList, targetList) => {
+    const itemsToStay = [];
+    const itemsToMove = [];
+    sourceList.forEach((currentItem) => {
+      if (currentItem.selected) {
+        itemsToMove.push(currentItem);
+        currentItem.selected = false;
+      } else {
+        itemsToStay.push(currentItem);
+      }
+    });
+    return [itemsToStay, [...targetList, ...itemsToMove]];
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>Items Columns Selector</h1>
+      <div className="card py-7">
+        <div className="container flex gap-2 w-full">
+          <ItemsPanel
+            items={leftItems}
+            onSelect={(newItems) => {
+              setLeftItems(newItems);
+            }}
+          />
+
+          <div className="buttons-container flex flex-col gap-3 justify-center">
+            <button
+              onClick={() => {
+                const [newLeftItems, newRightItems] = moveSelections(
+                  leftItems,
+                  rightItems
+                );
+                setLeftItems(newLeftItems);
+                setRightItems(newRightItems);
+              }}
+            >
+              &#x27A1;
+            </button>
+            <button
+              onClick={() => {
+                const [newRightItems, newLeftItems] = moveSelections(
+                  rightItems,
+                  leftItems
+                );
+                setLeftItems(newLeftItems);
+                setRightItems(newRightItems);
+              }}
+            >
+              &#x2B05;
+            </button>
+          </div>
+
+          <ItemsPanel
+            items={rightItems}
+            onSelect={(newItems) => {
+              setRightItems(newItems);
+            }}
+          />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
