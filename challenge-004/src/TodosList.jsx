@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 function TodosList({ todos = [], onCompleteItem, onDeleteItem }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -20,24 +20,17 @@ function TodosList({ todos = [], onCompleteItem, onDeleteItem }) {
           </li>
         ))}
       </ul>
-      <dialog open={isDialogOpen}>
-        <p>Are you sure you want to delete this TO-DO item?</p>
-        <button
-          onClick={() => {
-            setIsDialogOpen(false);
-          }}
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => {
-            setIsDialogOpen(false);
-            onDeleteItem(selectedId);
-          }}
-        >
-          Yes, delete it
-        </button>
-      </dialog>
+
+      <ConfirmationDialog
+        isOpen={isDialogOpen}
+        onCancel={() => {
+          setIsDialogOpen(false);
+        }}
+        onConfirm={() => {
+          setIsDialogOpen(false);
+          onDeleteItem(selectedId);
+        }}
+      />
     </>
   );
 }
