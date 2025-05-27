@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import TodosList from "./TodosList";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -19,6 +20,16 @@ function App() {
     input.value = "";
   };
 
+  const onCompleteItem = (id) => {
+    setTodos(
+      todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+    );
+  };
+
+  const onDeleteItem = (id) => {
+    setTodos(todos.filter((t) => t.id !== id));
+  };
+
   return (
     <>
       <div>
@@ -33,23 +44,11 @@ function App() {
         />
         <button type="submit">Add</button>
       </form>
-      <ul>
-        {todos.map((todo) => (
-          <li
-            key={todo.id}
-            className={todo.completed ? "completed" : ""}
-            onClick={() => {
-              setTodos(
-                todos.map((t) =>
-                  t.id === todo.id ? { ...t, completed: !t.completed } : t
-                )
-              );
-            }}
-          >
-            {todo.label}
-          </li>
-        ))}
-      </ul>
+      <TodosList
+        todos={todos}
+        onCompleteItem={onCompleteItem}
+        onDeleteItem={onDeleteItem}
+      />
     </>
   );
 }
