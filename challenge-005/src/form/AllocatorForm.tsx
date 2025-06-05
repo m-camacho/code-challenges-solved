@@ -2,21 +2,16 @@ import { useAllocationsContext } from "../contexts/allocationsContext";
 import Input from "./Input";
 
 function AllocatorForm() {
-  const { allocations, setAllocations } = useAllocationsContext();
+  const { allocations, addNewAllocation } = useAllocationsContext();
   console.log({ allocations });
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const { elements } = e.currentTarget;
-    const newAllocations = [
-      ...allocations,
-      {
-        id: crypto.randomUUID(),
+    addNewAllocation({
         displayName: elements.processName.value,
         memoryUsage: elements.memoryUsage.value,
-      },
-    ];
-    setAllocations(newAllocations);
+      });
   };
 
   return (
