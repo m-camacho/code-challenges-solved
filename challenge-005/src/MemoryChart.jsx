@@ -1,12 +1,13 @@
-import { useContext } from "react";
-import { AllocationsContext } from "./contexts/allocationsContext";
+import { useAllocationsContext } from "./contexts/allocationsContext";
 
 function App() {
-  const { allocations } = useContext(AllocationsContext);
+  const { allocations } = useAllocationsContext();
   return (
     <div>
       {allocations.map((allocation) => (
-        <div key={allocation.id}>{allocation.displayName}</div>
+        <div key={allocation.id}>
+          {`${allocation.displayName} - ${allocation.memoryUsage}`}
+        </div>
       ))}
     </div>
   );

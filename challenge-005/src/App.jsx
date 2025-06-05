@@ -1,13 +1,11 @@
-import AllocatorForm from "./AllocatorForm";
 import AllocationsContextProvider from "./contexts/allocationsContext";
+import AllocatorForm from "./form/AllocatorForm";
 import MemoryChart from "./MemoryChart";
 
 function App() {
   return (
     <AllocationsContextProvider>
-      <h1>Memory representation</h1>
-      <p>Use ctrl + cmd + space to see the emoji panel in macOS 💻</p>
-
+      <h1 className="text-2xl font-bold mb-4">Memory representation</h1>
       <AllocatorForm />
       <MemoryChart />
     </AllocationsContextProvider>
